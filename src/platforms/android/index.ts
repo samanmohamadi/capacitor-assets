@@ -165,7 +165,6 @@ export class AndroidAssetGenerator extends AssetGenerator {
   ): Promise<OutputAsset> {
     // Generate light splash
     const resPath = this.getResPath(project);
-
     let drawableDir = `drawable`;
     if (splash.density) {
       drawableDir = `drawable-${splash.density}`;
@@ -305,9 +304,8 @@ export class AndroidAssetGenerator extends AssetGenerator {
     asset: InputAsset,
     template: AndroidOutputAssetTemplate,
   ): Promise<[string, OutputInfo]> {
-    const svg = `<svg width="${template.width}" height="${template.height}"><circle cx="${template.width / 2}" cy="${
-      template.height / 2
-    }" r="${template.width / 2}" fill="#ffffff"/></svg>`;
+    const svg = `<svg width="${template.width}" height="${template.height}"><circle cx="${template.width / 2}" cy="${template.height / 2
+      }" r="${template.width / 2}" fill="#ffffff"/></svg>`;
 
     const resPath = this.getResPath(project);
     const destRound = join(resPath, `mipmap-${template.density}`, 'ic_launcher_round.png');
@@ -325,7 +323,7 @@ export class AndroidAssetGenerator extends AssetGenerator {
 
   private async generateAdaptiveIconForeground(asset: InputAsset, project: Project): Promise<OutputAsset[]> {
     const icons = Object.values(AndroidAssetTemplates).filter(
-      (a) => a.kind === AssetKind.Icon,
+      (a) => a.kind === AssetKind.AdaptiveIcon,
     ) as AndroidOutputAssetTemplateAdaptiveIcon[];
 
     const pipe = asset.pipeline();
@@ -348,7 +346,6 @@ export class AndroidAssetGenerator extends AssetGenerator {
     pipe: Sharp,
   ) {
     const resPath = this.getResPath(project);
-
     // Create the foreground and background images
     const destForeground = join(resPath, `mipmap-${icon.density}`, 'ic_launcher_foreground.png');
     const parentDir = dirname(destForeground);
@@ -397,7 +394,7 @@ export class AndroidAssetGenerator extends AssetGenerator {
 
   private async generateAdaptiveIconBackground(asset: InputAsset, project: Project): Promise<OutputAsset[]> {
     const icons = Object.values(AndroidAssetTemplates).filter(
-      (a) => a.kind === AssetKind.Icon,
+      (a) => a.kind === AssetKind.AdaptiveIcon,
     ) as AndroidOutputAssetTemplateAdaptiveIcon[];
 
     const pipe = asset.pipeline();
