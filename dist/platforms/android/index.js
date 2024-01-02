@@ -24,7 +24,6 @@ class AndroidAssetGenerator extends asset_generator_1.AssetGenerator {
         if (asset.platform !== "any" /* Any */ && asset.platform !== "android" /* Android */) {
             return [];
         }
-        console.log('0 -----', asset.path, asset.kind, asset.width);
         switch (asset.kind) {
             case "logo" /* Logo */:
             case "logo-dark" /* LogoDark */:
@@ -37,7 +36,6 @@ class AndroidAssetGenerator extends asset_generator_1.AssetGenerator {
                 return this.generateAdaptiveIconBackground(asset, project);
             case "splash" /* Splash */:
             case "splash-dark" /* SplashDark */:
-                console.log('splash', asset);
                 return this.generateSplashes(asset, project);
         }
         return [];
@@ -108,7 +106,6 @@ class AndroidAssetGenerator extends asset_generator_1.AssetGenerator {
         var _a, _b, _c, _d, _e, _f, _g;
         // Generate light splash
         const resPath = this.getResPath(project);
-        console.log('____', asset);
         let drawableDir = `drawable`;
         if (splash.density) {
             drawableDir = `drawable-${splash.density}`;
@@ -210,14 +207,12 @@ class AndroidAssetGenerator extends asset_generator_1.AssetGenerator {
         if (!pipe) {
             throw new error_1.BadPipelineError('Sharp instance not created');
         }
-        // console.log('----------------------', icons)
         return Promise.all(icons.map(async (icon) => {
             return await this._generateAdaptiveIconForeground(project, asset, icon, pipe);
         }));
     }
     async _generateAdaptiveIconForeground(project, asset, icon, pipe) {
         const resPath = this.getResPath(project);
-        // console.log('++++', asset)
         // Create the foreground and background images
         const destForeground = (0, path_1.join)(resPath, `mipmap-${icon.density}`, 'ic_launcher_foreground.png');
         const parentDir = (0, path_1.dirname)(destForeground);
@@ -311,7 +306,6 @@ class AndroidAssetGenerator extends asset_generator_1.AssetGenerator {
     }
     async generateSplashes(asset, project) {
         const pipe = asset.pipeline();
-        // console.log('aaaa', asset)
         if (!pipe) {
             throw new error_1.BadPipelineError('Sharp instance not created');
         }

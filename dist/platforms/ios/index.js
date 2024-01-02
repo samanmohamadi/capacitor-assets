@@ -27,7 +27,6 @@ class IosAssetGenerator extends asset_generator_1.AssetGenerator {
         if (asset.platform !== "any" /* Any */ && asset.platform !== "ios" /* Ios */) {
             return [];
         }
-        console.log('ios -----', asset.path, asset.kind, asset.width);
         switch (asset.kind) {
             case "logo" /* Logo */:
             case "logo-dark" /* LogoDark */:
@@ -133,7 +132,6 @@ class IosAssetGenerator extends asset_generator_1.AssetGenerator {
         const generated = await Promise.all(icons.map(async (icon) => {
             var _a;
             const dest = (0, path_1.join)(iosDir, exports.IOS_APP_ICON_SET_PATH, icon.name);
-            console.log('path', dest);
             const outputInfo = await pipe
                 .resize(icon.width, icon.height)
                 .png()
@@ -145,19 +143,16 @@ class IosAssetGenerator extends asset_generator_1.AssetGenerator {
                 [icon.name]: outputInfo,
             });
         }));
-        console.log({ generated });
         await this.updateIconsContentsJson(generated, project);
         return generated;
     }
     // Generate ALL the icons when only given a logo
     async generateIconsForLogo(asset, project) {
         const icons = Object.values(IosAssetTemplates).filter((a) => ["icon" /* Icon */].find((i) => i === a.kind));
-        console.log(icons);
         return this._generateIcons(asset, project, icons);
     }
     async generateIcons(asset, project) {
         const icons = Object.values(IosAssetTemplates).filter((a) => ["icon" /* Icon */].find((i) => i === a.kind));
-        console.log(icons);
         return this._generateIcons(asset, project, icons);
     }
     async generateSplashes(asset, project) {
