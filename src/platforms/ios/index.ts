@@ -286,7 +286,11 @@ export class IosAssetGenerator extends AssetGenerator {
 
       parsed.images.map((i: any) => {
         if (i.filename !== (g.template as IosOutputAssetTemplate).name) {
-          rmSync(join(assetsPath, i.filename));
+          try {
+            rmSync(join(assetsPath, i.filename));
+          } catch (e) {
+            console.log(e)
+          }
         }
       });
 
